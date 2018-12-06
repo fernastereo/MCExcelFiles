@@ -7,14 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace MCExcelFiles
 {
-    public partial class Form1 : Form
+    public partial class FrmMain : Form
     {
-        public Form1()
+        public FrmMain()
         {
             InitializeComponent();
+
+            string basePath = ConfigurationManager.AppSettings["basePath"];
+            txtBasePath.Text = basePath;
+        }
+
+        private void btnSavePath_Click(object sender, EventArgs e)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings.Add("basePath", "Some Cool Path");
+            config.Save(ConfigurationSaveMode.Modified);
+
+            MessageBox.Show("Base path updated!", "MCExcelFiles");
         }
     }
 }
