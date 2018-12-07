@@ -32,6 +32,11 @@ namespace MCExcelFiles
             }
         }
 
+        public Project()
+        {
+            _basePath = BasePath;
+        }
+
         public Boolean renameAndCopyFiles(string nFile, string nTarget, string nPrefix)
         {
             string sourceFile;

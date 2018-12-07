@@ -22,7 +22,7 @@ namespace MCExcelFiles
             string basePath = project.BasePath;
 
             txtBasePath.Enabled = false;
-
+            txtTargetPath.ReadOnly = true;
             if(basePath != null)
             {
                 txtBasePath.Text = basePath;
@@ -58,29 +58,48 @@ namespace MCExcelFiles
             string targetPath = txtTargetPath.Text;
             string projectPrefix = txtProjectPrefix.Text;
 
-            if (!System.IO.Directory.Exists(targetPath))
+            if (String.IsNullOrEmpty(projectPrefix) || projectPrefix.Length < 3)
             {
-                if(MessageBox.Show("La carpeta destino no existe, desea crearla?", this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    System.IO.Directory.CreateDirectory(targetPath);
-                }
-                else
-                {
-                    return;
-                }
+                MessageBox.Show("Por favor especifique un prefijo válido para el proyecto", this.Text);
+                return;
             }
 
-            Project project = new Project();
-            for(int i = 0; i <= lstBaseFiles.Items.Count - 1; i++)
+            if (!String.IsNullOrEmpty(targetPath))
             {
-                if(!project.renameAndCopyFiles(lstBaseFiles.Items[i].ToString(), targetPath, projectPrefix))
+                if (!System.IO.Directory.Exists(targetPath))
                 {
-                    MessageBox.Show(project.CopyError, this.Text);
-                    return;
+                    if(MessageBox.Show("La carpeta destino no existe, desea crearla?", this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    {
+                        System.IO.Directory.CreateDirectory(targetPath);
+                    }
+                    else
+                    {
+                        return;
+                    }
                 }
-            }
 
-            MessageBox.Show("Los archivos fueron copiados satisfactoriamente en la carpeta destino");
+                Project project = new Project();
+                pgbTask.Minimum = 0;
+                int n = lstBaseFiles.Items.Count;
+                pgbTask.Maximum = n;
+                pgbTask.Visible = true;
+                for (int i = 0; i <= n - 1; i++)
+                {
+                    if (!project.renameAndCopyFiles(lstBaseFiles.Items[i].ToString(), targetPath, projectPrefix))
+                    {
+                        MessageBox.Show(project.CopyError, this.Text);
+                        return;
+                    }
+                    
+                    pgbTask.Value = i;
+                }
+                pgbTask.Visible = false;
+                MessageBox.Show("Los archivos fueron copiados satisfactoriamente en la carpeta destino", this.Text);
+            }
+            else
+            {
+                MessageBox.Show("Por favor especifique la carpeta destino de los archivos", this.Text);
+            }
         }
 
         private void loadFiles(string sPath)
