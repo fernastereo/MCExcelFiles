@@ -14,14 +14,13 @@ namespace MCExcelFiles
 {
     public partial class FrmMain : Form
     {
-        const string PREFIJO_BASE_ARCHIVOS = "XXX";
-
         public FrmMain()
         {
             InitializeComponent();
 
             Project project = new Project();
             string basePath = project.BasePath;
+
             txtBasePath.Enabled = false;
 
             if(basePath != null)
@@ -30,17 +29,6 @@ namespace MCExcelFiles
                 loadFiles(basePath);
             }
             
-        }
-
-        private void loadFiles(string sPath)
-        {
-            lstBaseFiles.Items.Clear();
-            string[] files = Directory.GetFiles(sPath);
-
-            foreach (string file in files)
-            {
-                lstBaseFiles.Items.Add(Path.GetFileName(file));
-            }
         }
 
         private void btnSavePath_Click(object sender, EventArgs e)
@@ -67,12 +55,8 @@ namespace MCExcelFiles
 
         private void btnCopyFiles_Click(object sender, EventArgs e)
         {
-            string basePath = txtBasePath.Text;
-            string[] files = Directory.GetFiles(basePath);
             string targetPath = txtTargetPath.Text;
-            string sourceFile;
-            string destFile;
-            string newFile;
+            string projectPrefix = txtProjectPrefix.Text;
 
             if (!System.IO.Directory.Exists(targetPath))
             {
@@ -85,15 +69,29 @@ namespace MCExcelFiles
                     return;
                 }
             }
-            foreach (string file in files)
+
+            Project project = new Project();
+            for(int i = 0; i <= lstBaseFiles.Items.Count - 1; i++)
             {
-                newFile = Path.GetFileName(file).Replace(PREFIJO_BASE_ARCHIVOS, txtProjectPrefix.Text);
-                sourceFile = System.IO.Path.Combine(basePath, file);
-                destFile = System.IO.Path.Combine(targetPath, newFile);
-                System.IO.File.Copy(sourceFile, destFile, true);
+                if(!project.renameAndCopyFiles(lstBaseFiles.Items[i].ToString(), targetPath, projectPrefix))
+                {
+                    MessageBox.Show(project.CopyError, this.Text);
+                    return;
+                }
             }
 
-            MessageBox.Show("Listo care gaver");
+            MessageBox.Show("Los archivos fueron copiados satisfactoriamente en la carpeta destino");
+        }
+
+        private void loadFiles(string sPath)
+        {
+            lstBaseFiles.Items.Clear();
+            string[] files = Directory.GetFiles(sPath);
+
+            foreach (string file in files)
+            {
+                lstBaseFiles.Items.Add(Path.GetFileName(file));
+            }
         }
     }
 }
