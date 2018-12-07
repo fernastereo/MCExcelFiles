@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Configuration;
+using System.IO;
 
 namespace MCExcelFiles
 {
@@ -18,16 +19,42 @@ namespace MCExcelFiles
             InitializeComponent();
 
             string basePath = ConfigurationManager.AppSettings["basePath"];
-            txtBasePath.Text = basePath;
+            if(basePath != null)
+            {
+                txtBasePath.Text = basePath;
+                lstBaseFiles.Items.Clear();
+                string[] files = Directory.GetFiles(basePath);
+
+                foreach (string file in files)
+                {
+                    lstBaseFiles.Items.Add(Path.GetFileName(file));
+                }
+            }
+            
         }
 
         private void btnSavePath_Click(object sender, EventArgs e)
         {
-            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            config.AppSettings.Settings.Add("basePath", "Some Cool Path");
-            config.Save(ConfigurationSaveMode.Modified);
+            FolderBrowserDialog fdb = new FolderBrowserDialog();
+            if(fdb.ShowDialog() == DialogResult.OK)
+            {
+                lstBaseFiles.Items.Clear();
+                string[] files = Directory.GetFiles(fdb.SelectedPath);
 
-            MessageBox.Show("Base path updated!", "MCExcelFiles");
+                foreach(string file in files)
+                {
+                    lstBaseFiles.Items.Add(Path.GetFileName(file));
+                }
+
+                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                config.AppSettings.Settings.Clear();
+                config.AppSettings.Settings.Add("basePath", fdb.SelectedPath);
+                config.Save(ConfigurationSaveMode.Modified);
+
+                //MessageBox.Show("Base path updated!", "MCExcelFiles");
+
+            }
+
         }
     }
 }
