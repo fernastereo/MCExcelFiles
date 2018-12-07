@@ -56,5 +56,14 @@ namespace MCExcelFiles
             }
 
         }
+
+        private void btnSaveDestinationPath_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if(fbd.ShowDialog() == DialogResult.OK)
+            {
+               
+            }
+        }
     }
 }
