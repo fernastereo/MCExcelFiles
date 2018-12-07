@@ -14,45 +14,44 @@ namespace MCExcelFiles
 {
     public partial class FrmMain : Form
     {
+        const string PREFIJO_BASE_ARCHIVOS = "XXX";
+
         public FrmMain()
         {
             InitializeComponent();
 
-            string basePath = ConfigurationManager.AppSettings["basePath"];
+            Project project = new Project();
+            string basePath = project.BasePath;
+            txtBasePath.Enabled = false;
+
             if(basePath != null)
             {
                 txtBasePath.Text = basePath;
-                lstBaseFiles.Items.Clear();
-                string[] files = Directory.GetFiles(basePath);
-
-                foreach (string file in files)
-                {
-                    lstBaseFiles.Items.Add(Path.GetFileName(file));
-                }
+                loadFiles(basePath);
             }
             
         }
 
+        private void loadFiles(string sPath)
+        {
+            lstBaseFiles.Items.Clear();
+            string[] files = Directory.GetFiles(sPath);
+
+            foreach (string file in files)
+            {
+                lstBaseFiles.Items.Add(Path.GetFileName(file));
+            }
+        }
+
         private void btnSavePath_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fdb = new FolderBrowserDialog();
-            if(fdb.ShowDialog() == DialogResult.OK)
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if(fbd.ShowDialog() == DialogResult.OK)
             {
-                lstBaseFiles.Items.Clear();
-                string[] files = Directory.GetFiles(fdb.SelectedPath);
+                loadFiles(fbd.SelectedPath);
 
-                foreach(string file in files)
-                {
-                    lstBaseFiles.Items.Add(Path.GetFileName(file));
-                }
-
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings.Clear();
-                config.AppSettings.Settings.Add("basePath", fdb.SelectedPath);
-                config.Save(ConfigurationSaveMode.Modified);
-
-                //MessageBox.Show("Base path updated!", "MCExcelFiles");
-
+                Project project = new Project();
+                project.BasePath = fbd.SelectedPath;
             }
 
         }
@@ -77,7 +76,7 @@ namespace MCExcelFiles
 
             if (!System.IO.Directory.Exists(targetPath))
             {
-                if(MessageBox.Show("La carpeta destino no existe, desea crearla?", "MCExcelFiles", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if(MessageBox.Show("La carpeta destino no existe, desea crearla?", this.Text, MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     System.IO.Directory.CreateDirectory(targetPath);
                 }
@@ -88,7 +87,7 @@ namespace MCExcelFiles
             }
             foreach (string file in files)
             {
-                newFile = Path.GetFileName(file).Replace("XXX", txtProjectPrefix.Text);
+                newFile = Path.GetFileName(file).Replace(PREFIJO_BASE_ARCHIVOS, txtProjectPrefix.Text);
                 sourceFile = System.IO.Path.Combine(basePath, file);
                 destFile = System.IO.Path.Combine(targetPath, newFile);
                 System.IO.File.Copy(sourceFile, destFile, true);
