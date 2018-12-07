@@ -35,9 +35,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtBasePath = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnSaveDestinationPath = new System.Windows.Forms.Button();
+            this.btnSaveTargetPath = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtTargetPath = new System.Windows.Forms.TextBox();
             this.lstBaseFiles = new System.Windows.Forms.ListBox();
             this.ilsIcons = new System.Windows.Forms.ImageList(this.components);
             this.txtProjectPrefix = new System.Windows.Forms.TextBox();
@@ -91,9 +91,9 @@
             this.groupBox2.Controls.Add(this.txtProjectPrefix);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.btnCopyFiles);
-            this.groupBox2.Controls.Add(this.btnSaveDestinationPath);
+            this.groupBox2.Controls.Add(this.btnSaveTargetPath);
             this.groupBox2.Controls.Add(this.label2);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.txtTargetPath);
             this.groupBox2.Location = new System.Drawing.Point(16, 79);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(587, 86);
@@ -101,17 +101,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Carpeta Destino";
             // 
-            // btnSaveDestinationPath
+            // btnSaveTargetPath
             // 
-            this.btnSaveDestinationPath.ImageIndex = 0;
-            this.btnSaveDestinationPath.ImageList = this.ilsIcons;
-            this.btnSaveDestinationPath.Location = new System.Drawing.Point(550, 17);
-            this.btnSaveDestinationPath.Name = "btnSaveDestinationPath";
-            this.btnSaveDestinationPath.Size = new System.Drawing.Size(24, 24);
-            this.btnSaveDestinationPath.TabIndex = 5;
-            this.btnSaveDestinationPath.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnSaveDestinationPath.UseVisualStyleBackColor = true;
-            this.btnSaveDestinationPath.Click += new System.EventHandler(this.btnSaveDestinationPath_Click);
+            this.btnSaveTargetPath.ImageIndex = 0;
+            this.btnSaveTargetPath.ImageList = this.ilsIcons;
+            this.btnSaveTargetPath.Location = new System.Drawing.Point(550, 17);
+            this.btnSaveTargetPath.Name = "btnSaveTargetPath";
+            this.btnSaveTargetPath.Size = new System.Drawing.Size(24, 24);
+            this.btnSaveTargetPath.TabIndex = 5;
+            this.btnSaveTargetPath.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnSaveTargetPath.UseVisualStyleBackColor = true;
+            this.btnSaveTargetPath.Click += new System.EventHandler(this.btnSaveTargetPath_Click);
             // 
             // label2
             // 
@@ -122,12 +122,12 @@
             this.label2.TabIndex = 4;
             this.label2.Text = "Directorio De Archivos:";
             // 
-            // textBox1
+            // txtTargetPath
             // 
-            this.textBox1.Location = new System.Drawing.Point(132, 19);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(412, 20);
-            this.textBox1.TabIndex = 3;
+            this.txtTargetPath.Location = new System.Drawing.Point(132, 19);
+            this.txtTargetPath.Name = "txtTargetPath";
+            this.txtTargetPath.Size = new System.Drawing.Size(412, 20);
+            this.txtTargetPath.TabIndex = 3;
             // 
             // lstBaseFiles
             // 
@@ -174,6 +174,7 @@
             this.btnCopyFiles.TabIndex = 9;
             this.btnCopyFiles.Text = "Crear Archivos";
             this.btnCopyFiles.UseVisualStyleBackColor = true;
+            this.btnCopyFiles.Click += new System.EventHandler(this.btnCopyFiles_Click);
             // 
             // FrmMain
             // 
@@ -203,9 +204,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtBasePath;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button btnSaveDestinationPath;
+        private System.Windows.Forms.Button btnSaveTargetPath;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtTargetPath;
         private System.Windows.Forms.ListBox lstBaseFiles;
         private System.Windows.Forms.ImageList ilsIcons;
         private System.Windows.Forms.TextBox txtProjectPrefix;

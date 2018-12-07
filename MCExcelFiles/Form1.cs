@@ -57,13 +57,44 @@ namespace MCExcelFiles
 
         }
 
-        private void btnSaveDestinationPath_Click(object sender, EventArgs e)
+        private void btnSaveTargetPath_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if(fbd.ShowDialog() == DialogResult.OK)
             {
-               
+                txtTargetPath.Text = fbd.SelectedPath;
             }
+        }
+
+        private void btnCopyFiles_Click(object sender, EventArgs e)
+        {
+            string basePath = txtBasePath.Text;
+            string[] files = Directory.GetFiles(basePath);
+            string targetPath = txtTargetPath.Text;
+            string sourceFile;
+            string destFile;
+            string newFile;
+
+            if (!System.IO.Directory.Exists(targetPath))
+            {
+                if(MessageBox.Show("La carpeta destino no existe, desea crearla?", "MCExcelFiles", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    System.IO.Directory.CreateDirectory(targetPath);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            foreach (string file in files)
+            {
+                newFile = Path.GetFileName(file).Replace("XXX", txtProjectPrefix.Text);
+                sourceFile = System.IO.Path.Combine(basePath, file);
+                destFile = System.IO.Path.Combine(targetPath, newFile);
+                System.IO.File.Copy(sourceFile, destFile, true);
+            }
+
+            MessageBox.Show("Listo care gaver");
         }
     }
 }
