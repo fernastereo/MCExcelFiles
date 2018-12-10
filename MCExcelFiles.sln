@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCExcelFiles", "MCExcelFiles\MCExcelFiles.csproj", "{962CC6D9-C56D-4ED5-8A63-066B6156C30D}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MCExcelFiles_Installer", "MCExcelFiles_Installer\MCExcelFiles_Installer.vdproj", "{1BDB1D1E-99CF-460F-B389-8C07487113CF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{962CC6D9-C56D-4ED5-8A63-066B6156C30D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{962CC6D9-C56D-4ED5-8A63-066B6156C30D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{962CC6D9-C56D-4ED5-8A63-066B6156C30D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDB1D1E-99CF-460F-B389-8C07487113CF}.Debug|Any CPU.ActiveCfg = Debug
+		{1BDB1D1E-99CF-460F-B389-8C07487113CF}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

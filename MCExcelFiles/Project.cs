@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Configuration;
 using System.IO;
+using System.Xml;
 
 namespace MCExcelFiles
 {
     class Project
     {
+        const string APP_XML_FILE = "\\xPath.xml";
+        const string APP_ROOT_KEY = "Config";
         const string APP_CONFIG_KEY = "basePath";
         const string BASE_PREFIX = "XXX";
 
@@ -15,16 +18,26 @@ namespace MCExcelFiles
         public string BasePath {
             get 
             {
-                _basePath = ConfigurationManager.AppSettings[APP_CONFIG_KEY];
+                XmlDocument xPath = new XmlDocument();
+                xPath.Load(AppDomain.CurrentDomain.BaseDirectory + APP_XML_FILE);
+                XmlNodeList xRoot = xPath.GetElementsByTagName(APP_ROOT_KEY);
+                XmlNodeList xBase = ((XmlElement)xRoot[0]).GetElementsByTagName(APP_CONFIG_KEY);
+                _basePath = xBase[0].InnerText;
+
                 return _basePath;
             }
             set 
             {
                 _basePath = value;
-                Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-                config.AppSettings.Settings.Clear();
-                config.AppSettings.Settings.Add(APP_CONFIG_KEY, _basePath);
-                config.Save(ConfigurationSaveMode.Modified);
+
+                XmlDocument xPath = new XmlDocument();
+                XmlElement xRoot = xPath.CreateElement(APP_ROOT_KEY);
+                xPath.AppendChild(xRoot);
+                XmlElement xBase = xPath.CreateElement(APP_CONFIG_KEY);
+                xBase.AppendChild(xPath.CreateTextNode(_basePath));
+                xRoot.AppendChild(xBase);
+
+                xPath.Save(AppDomain.CurrentDomain.BaseDirectory + APP_XML_FILE);
             }
         }
 
