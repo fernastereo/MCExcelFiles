@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 using System.IO;
 
@@ -11,7 +7,7 @@ namespace MCExcelFiles
     class Project
     {
         const string APP_CONFIG_KEY = "basePath";
-        const string PREFIJO_BASE_ARCHIVOS = "XXX";
+        const string BASE_PREFIX = "XXX";
 
         private string _basePath;
 
@@ -36,7 +32,7 @@ namespace MCExcelFiles
         {
             _basePath = BasePath;
         }
-
+        
         public Boolean renameAndCopyFiles(string nFile, string nTarget, string nPrefix)
         {
             string sourceFile;
@@ -45,10 +41,10 @@ namespace MCExcelFiles
 
             try
             {
-                newFile = nFile.Replace(PREFIJO_BASE_ARCHIVOS, nPrefix);
-                sourceFile = System.IO.Path.Combine(_basePath, nFile);
-                destFile = System.IO.Path.Combine(nTarget, newFile);
-                System.IO.File.Copy(sourceFile, destFile, true);
+                newFile = nFile.Replace(BASE_PREFIX, nPrefix);
+                sourceFile = Path.Combine(_basePath, nFile);
+                destFile = Path.Combine(nTarget, newFile);
+                File.Copy(sourceFile, destFile, true);
                 return true;
             }
             catch (Exception ex)
