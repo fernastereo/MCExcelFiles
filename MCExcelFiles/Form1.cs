@@ -32,7 +32,6 @@ namespace MCExcelFiles
                 project.BasePath = fbd.SelectedPath;
                 txtBasePath.Text = project.BasePath;
             }
-
         }
 
         private void btnSaveTargetPath_Click(object sender, EventArgs e)
