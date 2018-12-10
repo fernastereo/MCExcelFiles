@@ -214,7 +214,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:MCExcelFiles"
         "ProductCode" = "8:{A09C869B-9B22-4B3B-8DB5-EA0008FFEAA9}"
-        "PackageCode" = "8:{E4F43A2F-5A5C-4877-99FE-DC76658BD095}"
+        "PackageCode" = "8:{D4EA0DAD-5046-486B-9748-066F3C2A3E40}"
         "UpgradeCode" = "8:{B6023A96-F389-4839-8EB5-A58CF9F0C80D}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

@@ -1,13 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Data;
+//using System.Drawing;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Configuration;
 using System.IO;
 
 namespace MCExcelFiles
@@ -18,16 +17,8 @@ namespace MCExcelFiles
         {
             InitializeComponent();
 
-            Project project = new Project();
-            string basePath = project.BasePath;
-
             txtBasePath.Enabled = false;
             txtTargetPath.ReadOnly = true;
-            if(basePath != null)
-            {
-                txtBasePath.Text = basePath;
-                loadFiles(basePath);
-            }
         }
 
         private void btnSavePath_Click(object sender, EventArgs e)
@@ -79,6 +70,7 @@ namespace MCExcelFiles
                 }
 
                 Project project = new Project();
+                project.BasePath = txtBasePath.Text;
                 pgbTask.Minimum = 0;
                 int n = lstBaseFiles.Items.Count;
                 pgbTask.Maximum = n;
@@ -105,11 +97,13 @@ namespace MCExcelFiles
         private void loadFiles(string sPath)
         {
             lstBaseFiles.Items.Clear();
-            string[] files = Directory.GetFiles(sPath);
+            if (!String.IsNullOrEmpty(sPath)) { 
+                string[] files = Directory.GetFiles(sPath);
 
-            foreach (string file in files)
-            {
-                lstBaseFiles.Items.Add(Path.GetFileName(file));
+                foreach (string file in files)
+                {
+                    lstBaseFiles.Items.Add(Path.GetFileName(file));
+                }
             }
         }
     }
